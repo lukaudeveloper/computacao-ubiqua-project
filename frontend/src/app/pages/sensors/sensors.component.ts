@@ -1,30 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { SensorService } from '../../services/sensor.service';
+import { Component, OnInit } from "@angular/core";
+import { SensorService } from "../../services/sensor.service";
 
 @Component({
-  selector: 'app-sensors',
-  templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss']
+  selector: "app-sensors",
+  templateUrl: "./sensors.component.html",
+  styleUrls: ["./sensors.component.scss"],
 })
 export class SensorsComponent implements OnInit {
   sensors: any[] = [];
-  newSensor = { name: '', type: '', location: '' };
+  newSensor = { name: "", type: "", location: "" };
   editingSensor: any = null;
 
-  constructor(private sensorService: SensorService) { }
+  constructor(private sensorService: SensorService) {}
 
   ngOnInit() {
     this.loadSensors();
   }
 
   loadSensors() {
-    this.sensorService.getSensors().subscribe(data => this.sensors = data);
+    this.sensorService.getSensors().subscribe((data) => (this.sensors = data));
   }
 
   addSensor() {
     this.sensorService.createSensor(this.newSensor).subscribe(() => {
       this.loadSensors();
-      this.newSensor = { name: '', type: '', location: '' };
+      this.newSensor = { name: "", type: "", location: "" };
     });
   }
 
@@ -33,10 +33,12 @@ export class SensorsComponent implements OnInit {
   }
 
   updateSensor() {
-    this.sensorService.updateSensor(this.editingSensor.id, this.editingSensor).subscribe(() => {
-      this.loadSensors();
-      this.editingSensor = null;
-    });
+    this.sensorService
+      .updateSensor(this.editingSensor.id, this.editingSensor)
+      .subscribe(() => {
+        this.loadSensors();
+        this.editingSensor = null;
+      });
   }
 
   deleteSensor(id: number) {

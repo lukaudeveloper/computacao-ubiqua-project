@@ -1,59 +1,59 @@
 <div class="dashboard">
-  <h2>Dashboard</h2>
+    <h2>Dashboard</h2>
 
-  <div class="section">
-    <h3>Sensors</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Location</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let sensor of sensors">
-          <td>{{ sensor.id }}</td>
-          <td>{{ sensor.name }}</td>
-          <td>{{ sensor.type }}</td>
-          <td>{{ sensor.location }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="section">
+        <h3>Sensors</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sensor of sensors">
+                    <td>{{ sensor.id }}</td>
+                    <td>{{ sensor.name }}</td>
+                    <td>{{ sensor.type }}</td>
+                    <td>{{ sensor.location }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-  <div class="section">
-    <h3>Recent Measurements</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Sensor</th>
-          <th>Value</th>
-          <th>Timestamp</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let measurement of measurements | slice:0:10">
-          <td>{{ measurement.sensor_name }}</td>
-          <td>{{ measurement.value }}</td>
-          <td>{{ measurement.timestamp }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="section">
+        <h3>Recent Measurements</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sensor</th>
+                    <th>Value</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let measurement of measurements | slice:0:10">
+                    <td>{{ measurement.sensor_name }}</td>
+                    <td>{{ measurement.value }}</td>
+                    <td>{{ measurement.timestamp }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-  <div class="section">
-    <h3>Alerts</h3>
-    <ul>
-      <li *ngFor="let alert of alerts">
-        {{ alert.message }} <button (click)="resolveAlert(alert.id)">Resolve</button>
-      </li>
-    </ul>
-  </div>
+    <div class="section">
+        <h3>Alerts</h3>
+        <ul>
+            <li *ngFor="let alert of alerts">
+                {{ alert.message }} <button (click)="resolveAlert(alert.id)">Resolve</button>
+            </li>
+        </ul>
+    </div>
 
-  <div class="section">
-    <h3>Charts</h3>
-    <app-measurement-chart></app-measurement-chart>
-  </div>
+    <div class="section">
+        <h3>Charts</h3>
+        <app-measurement-chart></app-measurement-chart>
+    </div>
 </div>

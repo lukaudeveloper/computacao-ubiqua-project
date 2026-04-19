@@ -1,22 +1,22 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { SensorsComponent } from './pages/sensors/sensors.component';
-import { HistoryComponent } from './pages/history/history.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { MeasurementChartComponent } from './components/measurement-chart/measurement-chart.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { MeasurementChartComponent } from "./components/measurement-chart/measurement-chart.component";
+import { NavbarComponent } from "./components/navbar/navbar.component";
+import { DashboardComponent } from "./pages/dashboard/dashboard.component";
+import { HistoryComponent } from "./pages/history/history.component";
+import { LoginComponent } from "./pages/login/login.component";
+import { SensorsComponent } from "./pages/sensors/sensors.component";
 
-import { AuthService } from './services/auth.service';
-import { SensorService } from './services/sensor.service';
-import { MeasurementService } from './services/measurement.service';
-import { AlertService } from './services/alert.service';
-import { WebsocketService } from './services/websocket.service';
+import { AlertService } from "./services/alert.service";
+import { AuthService } from "./services/auth.service";
+import { MeasurementService } from "./services/measurement.service";
+import { SensorService } from "./services/sensor.service";
+import { WebsocketService } from "./services/websocket.service";
 
 @NgModule({
   declarations: [
@@ -26,21 +26,16 @@ import { WebsocketService } from './services/websocket.service';
     SensorsComponent,
     HistoryComponent,
     NavbarComponent,
-    MeasurementChartComponent
+    MeasurementChartComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
     AuthService,
     SensorService,
     MeasurementService,
     AlertService,
-    WebsocketService
+    WebsocketService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

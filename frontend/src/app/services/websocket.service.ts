@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class WebsocketService {
   private socket: WebSocket | null = null;
   private subject = new Subject<any>();
 
-  constructor() { }
+  constructor() {}
 
   connect(url: string): Observable<any> {
     this.socket = new WebSocket(url);
