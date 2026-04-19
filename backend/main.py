@@ -1,0 +1,47 @@
+from fastapi import FastAPI, Depends, HTTPException, status, WebSocket
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+from database import get_db, engine
+from models import Base
+from routers import users, sensors, measurements, alerts
+from auth import verify_token
+from websocket import manager
+import uvicorn
+
+# Criar tabelas
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="Sistema de Monitorização Ambiental", version="1.0.0")
+
+# CORS para permitir acesso do frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Em produção, especificar origens
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Routers
+app.include_router(users.router, prefix="/api")
+app.include_router(sensors.router, prefix="/api")
+app.include_router(measurements.router, prefix="/api")
+app.include_router(alerts.router, prefix="/api")
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            # Pode processar mensagens do cliente se necessário
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
+
+@app.get("/")
+def read_root():
+    return {"message": "Sistema de Monitorização Ambiental Inteligente"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
