@@ -1,0 +1,46 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './pages/login/login.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { SensorsComponent } from './pages/sensors/sensors.component';
+import { HistoryComponent } from './pages/history/history.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { MeasurementChartComponent } from './components/measurement-chart/measurement-chart.component';
+
+import { AuthService } from './services/auth.service';
+import { SensorService } from './services/sensor.service';
+import { MeasurementService } from './services/measurement.service';
+import { AlertService } from './services/alert.service';
+import { WebsocketService } from './services/websocket.service';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    DashboardComponent,
+    SensorsComponent,
+    HistoryComponent,
+    NavbarComponent,
+    MeasurementChartComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
+  ],
+  providers: [
+    AuthService,
+    SensorService,
+    MeasurementService,
+    AlertService,
+    WebsocketService
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

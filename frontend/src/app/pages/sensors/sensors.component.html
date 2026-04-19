@@ -1,0 +1,51 @@
+<div class="sensors">
+  <h2>Sensors</h2>
+
+  <div class="add-sensor">
+    <h3>Add Sensor</h3>
+    <form (ngSubmit)="addSensor()">
+      <input [(ngModel)]="newSensor.name" name="name" placeholder="Name" required>
+      <input [(ngModel)]="newSensor.type" name="type" placeholder="Type" required>
+      <input [(ngModel)]="newSensor.location" name="location" placeholder="Location" required>
+      <button type="submit">Add</button>
+    </form>
+  </div>
+
+  <div class="sensor-list">
+    <h3>Sensor List</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Location</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sensor of sensors">
+          <td>{{ sensor.id }}</td>
+          <td>{{ sensor.name }}</td>
+          <td>{{ sensor.type }}</td>
+          <td>{{ sensor.location }}</td>
+          <td>
+            <button (click)="editSensor(sensor)">Edit</button>
+            <button (click)="deleteSensor(sensor.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="editingSensor" class="edit-sensor">
+    <h3>Edit Sensor</h3>
+    <form (ngSubmit)="updateSensor()">
+      <input [(ngModel)]="editingSensor.name" name="name" placeholder="Name" required>
+      <input [(ngModel)]="editingSensor.type" name="type" placeholder="Type" required>
+      <input [(ngModel)]="editingSensor.location" name="location" placeholder="Location" required>
+      <button type="submit">Update</button>
+      <button type="button" (click)="editingSensor = null">Cancel</button>
+    </form>
+  </div>
+</div>

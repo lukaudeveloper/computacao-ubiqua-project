@@ -1,0 +1,31 @@
+<div class="history">
+  <h2>Measurement History</h2>
+
+  <div class="filters">
+    <label for="sensor">Filter by Sensor:</label>
+    <select id="sensor" [(ngModel)]="selectedSensorId" (change)="onSensorChange()">
+      <option [value]="null">All Sensors</option>
+      <option *ngFor="let sensor of sensors" [value]="sensor.id">{{ sensor.name }}</option>
+    </select>
+    <button (click)="exportToCSV()">Export to CSV</button>
+  </div>
+
+  <app-measurement-chart [measurements]="measurements"></app-measurement-chart>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Sensor</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let measurement of measurements">
+        <td>{{ measurement.timestamp }}</td>
+        <td>{{ measurement.sensor_name }}</td>
+        <td>{{ measurement.value }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
