@@ -10,6 +10,7 @@ import { SensorService } from "../../services/sensor.service";
 export class HistoryComponent implements OnInit {
   measurements: any[] = [];
   sensors: any[] = [];
+  chartKey = 0;
 
   constructor(
     private measurementService: MeasurementService,
@@ -28,7 +29,10 @@ export class HistoryComponent implements OnInit {
   loadMeasurements() {
     this.measurementService
       .getMeasurements()
-      .subscribe((data) => (this.measurements = data));
+      .subscribe((data) => {
+        this.measurements = data;
+        this.chartKey++;
+      });
   }
 
   exportToCSV() {

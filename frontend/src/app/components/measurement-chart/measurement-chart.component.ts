@@ -10,6 +10,7 @@ Chart.register(...registerables);
 })
 export class MeasurementChartComponent implements OnChanges {
   @Input() measurements: any[] = [];
+  @Input() key: number = 0;
   chart: Chart | null = null;
 
   ngOnChanges() {
