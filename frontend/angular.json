@@ -58,12 +58,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "environmental-monitoring:build"
+          },
           "configurations": {
             "production": {
-              "buildTarget": "environmental-monitoring:build:production"
+              "browserTarget": "environmental-monitoring:build:production"
             },
             "development": {
-              "buildTarget": "environmental-monitoring:build:development"
+              "browserTarget": "environmental-monitoring:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,5 +97,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "162a0f2d-981f-4464-96cd-3f298a9b0964"
   }
 }
