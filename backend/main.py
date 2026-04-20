@@ -18,6 +18,16 @@ with engine.begin() as conn:
         columns = [column["name"] for column in inspector.get_columns("sensors")]
         if "is_active" not in columns:
             conn.execute(text("ALTER TABLE sensors ADD COLUMN is_active BOOLEAN DEFAULT FALSE"))
+        if "color" not in columns:
+            conn.execute(text("ALTER TABLE sensors ADD COLUMN color VARCHAR(20) DEFAULT '#007bff'"))
+    if "alerts" in inspector.get_table_names():
+        columns = [column["name"] for column in inspector.get_columns("alerts")]
+        if "threshold_value" not in columns:
+            conn.execute(text("ALTER TABLE alerts ADD COLUMN threshold_value FLOAT NULL"))
+        if "measurement_value" not in columns:
+            conn.execute(text("ALTER TABLE alerts ADD COLUMN measurement_value FLOAT NULL"))
+        if "comparison" not in columns:
+            conn.execute(text("ALTER TABLE alerts ADD COLUMN comparison VARCHAR(1) NULL"))
 
 app = FastAPI(title="Sistema de Monitorização Ambiental", version="1.0.0")
 

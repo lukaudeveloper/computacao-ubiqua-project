@@ -10,6 +10,7 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Location</th>
+                    <th>Color</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,6 +19,10 @@
                     <td>{{ sensor.name }}</td>
                     <td>{{ sensor.type }}</td>
                     <td>{{ sensor.location }}</td>
+                    <td>
+                        <span class="color-dot" [style.background]="sensor.color"></span>
+                        {{ sensor.color }}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -45,15 +50,46 @@
 
     <div class="section">
         <h3>Alerts</h3>
-        <ul>
-            <li *ngFor="let alert of alerts">
-                {{ alert.message }} <button (click)="resolveAlert(alert.id)">Resolve</button>
-            </li>
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sensor</th>
+                    <th>Data</th>
+                    <th>Limite</th>
+                    <th>Resultado</th>
+                    <th>Detalhes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let alert of alerts">
+                    <td>
+                        <span class="color-dot" [style.background]="alert.sensor_color"></span>
+                        {{ alert.sensor_name }}
+                    </td>
+                    <td>{{ alert.timestamp }}</td>
+                    <td>{{ alert.threshold_value }}</td>
+                    <td>{{ alert.comparison }} {{ alert.measurement_value }}</td>
+                    <td><button (click)="showAlertDetails(alert)">Ver detalhes</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" *ngIf="selectedAlert">
+        <div class="modal-content">
+            <h3>Alert Details</h3>
+            <p><strong>Sensor:</strong> {{ selectedAlert.sensor_name }}</p>
+            <p><strong>Tipo:</strong> {{ selectedAlert.sensor_type }}</p>
+            <p><strong>Data:</strong> {{ selectedAlert.timestamp }}</p>
+            <p><strong>Limite:</strong> {{ selectedAlert.threshold_value }}</p>
+            <p><strong>Resultado:</strong> {{ selectedAlert.comparison }} {{ selectedAlert.measurement_value }}</p>
+            <p><strong>Mensagem:</strong> {{ selectedAlert.message }}</p>
+            <button (click)="closeAlertDetails()">Fechar</button>
+        </div>
     </div>
 
     <div class="section">
         <h3>Charts</h3>
-        <app-measurement-chart></app-measurement-chart>
+        <app-measurement-chart [measurements]="measurements"></app-measurement-chart>
     </div>
 </div>

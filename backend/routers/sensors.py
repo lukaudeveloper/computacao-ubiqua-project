@@ -17,6 +17,7 @@ class SensorCreate(BaseModel):
     location: str
     threshold_min: float | None = None
     threshold_max: float | None = None
+    color: str = "#007bff"
 
 class SensorActivate(BaseModel):
     is_active: bool
@@ -25,7 +26,8 @@ class SensorActivate(BaseModel):
 def create_sensor(sensor: SensorCreate, token: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
     token_data = verify_token(token.credentials)
     user = db.query(User).filter(User.username == token_data.username).first()
-    new_sensor = Sensor(**sensor.dict(), user_id=user.id, is_active=False)
+    data = sensor.dict()
+    new_sensor = Sensor(**data, user_id=user.id, is_active=False)
     db.add(new_sensor)
     db.commit()
     db.refresh(new_sensor)

@@ -14,6 +14,7 @@ export class SensorsComponent implements OnInit {
     location: "",
     threshold_min: null,
     threshold_max: null,
+    color: "#007bff",
   };
   editingSensor: any = null;
   simulationMessage = "";
@@ -37,6 +38,7 @@ export class SensorsComponent implements OnInit {
         location: "",
         threshold_min: null,
         threshold_max: null,
+        color: "#007bff",
       };
     });
   }

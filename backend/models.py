@@ -19,6 +19,7 @@ class Sensor(Base):
     location = Column(String(100))
     threshold_min = Column(Float, nullable=True)
     threshold_max = Column(Float, nullable=True)
+    color = Column(String(20), default="#007bff")
     is_active = Column(Boolean, default=False)
     user_id = Column(Integer, ForeignKey("users.id"))
 
@@ -35,6 +36,9 @@ class Alert(Base):
     id = Column(Integer, primary_key=True, index=True)
     sensor_id = Column(Integer, ForeignKey("sensors.id"))
     message = Column(String(255))
+    threshold_value = Column(Float, nullable=True)
+    measurement_value = Column(Float, nullable=True)
+    comparison = Column(String(1), nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
     is_active = Column(Boolean, default=True)
     sensor = relationship("Sensor")

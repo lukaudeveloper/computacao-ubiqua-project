@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   sensors: any[] = [];
   measurements: any[] = [];
   alerts: any[] = [];
+  selectedAlert: any = null;
   private wsSubscription: Subscription | null = null;
 
   constructor(
@@ -42,13 +43,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   loadMeasurements() {
-    this.measurementService
-      .getMeasurements()
-      .subscribe((data) => (this.measurements = data));
+    this.measurementService.getMeasurements().subscribe((data) => {
+      this.measurements = data?.measurements ?? data;
+    });
   }
 
   loadAlerts() {
     this.alertService.getAlerts().subscribe((data) => (this.alerts = data));
+  }
+
+  showAlertDetails(alert: any) {
+    this.selectedAlert = alert;
+  }
+
+  closeAlertDetails() {
+    this.selectedAlert = null;
   }
 
   connectWebSocket() {

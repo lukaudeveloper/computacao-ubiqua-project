@@ -58,17 +58,21 @@ export class MeasurementChartComponent implements OnChanges {
           );
           return measurement ? measurement.value : null;
         });
-        const colors = [
+        const fallbackColors = [
           "rgb(75, 192, 192)",
           "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
           "rgb(255, 205, 86)",
           "rgb(153, 102, 255)",
         ];
+        const sensorColor =
+          sensorMeasurements.find((m) => m.sensor_color)?.sensor_color ||
+          fallbackColors[index % fallbackColors.length];
         return {
           label: sensorName,
           data: data,
-          borderColor: colors[index % colors.length],
+          borderColor: sensorColor,
+          backgroundColor: sensorColor,
           tension: 0.1,
           spanGaps: true,
         };

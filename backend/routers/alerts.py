@@ -12,10 +12,26 @@ security = HTTPBearer()
 def get_alerts(sensor_id: int | None = None, token: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
     token_data = verify_token(token.credentials)
     user = db.query(User).filter(User.username == token_data.username).first()
-    query = db.query(Alert).join(Sensor).filter(Sensor.user_id == user.id)
+    query = db.query(Alert, Sensor.name.label("sensor_name"), Sensor.type.label("sensor_type"), Sensor.color.label("sensor_color"))
+    query = query.join(Sensor).filter(Sensor.user_id == user.id)
     if sensor_id:
         query = query.filter(Alert.sensor_id == sensor_id)
-    alerts = query.all()
+    results = query.order_by(Alert.timestamp.desc()).all()
+    alerts = []
+    for alert, sensor_name, sensor_type, sensor_color in results:
+        alerts.append({
+            "id": alert.id,
+            "sensor_id": alert.sensor_id,
+            "sensor_name": sensor_name,
+            "sensor_type": sensor_type,
+            "sensor_color": sensor_color,
+            "message": alert.message,
+            "threshold_value": alert.threshold_value,
+            "measurement_value": alert.measurement_value,
+            "comparison": alert.comparison,
+            "timestamp": alert.timestamp.isoformat(),
+            "is_active": alert.is_active,
+        })
     return alerts
 
 @router.put("/alerts/{alert_id}/resolve")
