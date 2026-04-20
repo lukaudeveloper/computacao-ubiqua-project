@@ -7,7 +7,7 @@ import { AuthService } from "./auth.service";
   providedIn: "root",
 })
 export class MeasurementService {
-  private apiUrl = "/api";
+  private apiUrl = "http://localhost:8000/api";
 
   constructor(
     private http: HttpClient,

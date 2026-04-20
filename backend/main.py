@@ -24,7 +24,7 @@ app.add_middleware(
 )
 
 # Routers
-app.include_router(users.router, prefix="/api")
+app.include_router(users.router, prefix="/api/auth")
 app.include_router(sensors.router, prefix="/api")
 app.include_router(measurements.router, prefix="/api")
 app.include_router(alerts.router, prefix="/api")

@@ -8,7 +8,7 @@ SECRET_KEY = "your-secret-key"  # Em produção, usar variável de ambiente
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["pbkdf2_sha256", "bcrypt"], deprecated="auto")
 
 class TokenData(BaseModel):
     username: str | None = None
