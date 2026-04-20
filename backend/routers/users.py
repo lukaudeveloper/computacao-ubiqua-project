@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from database import get_db
 from models import User
-from auth import get_password_hash, create_access_token, verify_token
-from fastapi.security import HTTPBearer
+from auth import get_password_hash, create_access_token, verify_token, verify_password
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 router = APIRouter()
 security = HTTPBearer()

@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from database import get_db
 from models import Measurement, Sensor, User, Alert
 from auth import verify_token
-from fastapi.security import HTTPBearer
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 router = APIRouter()
 security = HTTPBearer()
