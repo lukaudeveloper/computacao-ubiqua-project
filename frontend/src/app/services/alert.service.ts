@@ -14,8 +14,9 @@ export class AlertService {
     private authService: AuthService,
   ) {}
 
-  getAlerts(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/alerts`, {
+  getAlerts(page: number = 1, limit: number = 20): Observable<any> {
+    const url = `${this.apiUrl}/alerts?page=${page}&limit=${limit}`;
+    return this.http.get(url, {
       headers: this.authService.getHeaders(),
     });
   }

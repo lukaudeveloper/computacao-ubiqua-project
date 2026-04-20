@@ -9,14 +9,21 @@ router = APIRouter()
 security = HTTPBearer()
 
 @router.get("/alerts")
-def get_alerts(sensor_id: int | None = None, token: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
+def get_alerts(sensor_id: int | None = None, page: int = 1, limit: int = 20, token: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
     token_data = verify_token(token.credentials)
     user = db.query(User).filter(User.username == token_data.username).first()
     query = db.query(Alert, Sensor.name.label("sensor_name"), Sensor.type.label("sensor_type"), Sensor.color.label("sensor_color"))
     query = query.join(Sensor).filter(Sensor.user_id == user.id)
     if sensor_id:
         query = query.filter(Alert.sensor_id == sensor_id)
-    results = query.order_by(Alert.timestamp.desc()).all()
+
+    # Get total count
+    total = query.count()
+
+    # Apply pagination
+    offset = (page - 1) * limit
+    results = query.order_by(Alert.timestamp.desc()).offset(offset).limit(limit).all()
+
     alerts = []
     for alert, sensor_name, sensor_type, sensor_color in results:
         alerts.append({
@@ -32,7 +39,15 @@ def get_alerts(sensor_id: int | None = None, token: HTTPAuthorizationCredentials
             "timestamp": alert.timestamp.isoformat(),
             "is_active": alert.is_active,
         })
-    return alerts
+    return {
+        "alerts": alerts,
+        "pagination": {
+            "page": page,
+            "limit": limit,
+            "total": total,
+            "pages": (total + limit - 1) // limit,
+        }
+    }
 
 @router.put("/alerts/{alert_id}/resolve")
 def resolve_alert(alert_id: int, token: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):

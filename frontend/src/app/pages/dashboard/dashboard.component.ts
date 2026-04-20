@@ -15,6 +15,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   measurements: any[] = [];
   alerts: any[] = [];
   selectedAlert: any = null;
+  currentPage = 1;
+  limit = 20;
+  pagination: any = {};
   private wsSubscription: Subscription | null = null;
 
   constructor(
@@ -49,7 +52,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   loadAlerts() {
-    this.alertService.getAlerts().subscribe((data) => (this.alerts = data));
+    this.alertService
+      .getAlerts(this.currentPage, this.limit)
+      .subscribe((data) => {
+        this.alerts = data.alerts;
+        this.pagination = data.pagination;
+      });
   }
 
   showAlertDetails(alert: any) {
@@ -58,6 +66,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   closeAlertDetails() {
     this.selectedAlert = null;
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.loadAlerts();
+  }
+
+  get visiblePages(): number[] {
+    const pages = [];
+    for (let i = 1; i <= this.pagination.pages; i++) {
+      pages.push(i);
+    }
+    const start = Math.max(0, this.currentPage - 3);
+    const end = this.currentPage + 2;
+    return pages.slice(start, end);
   }
 
   connectWebSocket() {

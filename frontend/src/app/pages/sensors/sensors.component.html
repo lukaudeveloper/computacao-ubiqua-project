@@ -15,6 +15,8 @@
                 Color:
                 <input [(ngModel)]="newSensor.color" name="color" type="color">
             </label>
+            <input [(ngModel)]="newSensor.simulation_interval" name="simulation_interval"
+                placeholder="Simulation interval (seconds)" type="number" min="5" max="3600">
             <button type="submit">Add</button>
         </form>
     </div>
@@ -30,13 +32,17 @@
                     <th>Location</th>
                     <th>Status</th>
                     <th>Thresholds</th>
+                    <th>Interval</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let sensor of sensors">
                     <td>{{ sensor.id }}</td>
-                    <td>{{ sensor.name }}</td>
+                    <td>
+                        <span class="color-dot" [style.background]="sensor.color"></span>
+                        {{ sensor.name }}
+                    </td>
                     <td>{{ sensor.type }}</td>
                     <td>{{ sensor.location }}</td>
                     <td>{{ sensor.is_active ? 'Ativo' : 'Inativo' }}</td>
@@ -45,6 +51,7 @@
                         -
                         {{ sensor.threshold_max ?? '—' }}
                     </td>
+                    <td>{{ sensor.simulation_interval }}s</td>
                     <td>
                         <button (click)="editSensor(sensor)">Edit</button>
                         <button (click)="deleteSensor(sensor.id)">Delete</button>
@@ -78,6 +85,8 @@
                 Color:
                 <input [(ngModel)]="editingSensor.color" name="color" type="color">
             </label>
+            <input [(ngModel)]="editingSensor.simulation_interval" name="simulation_interval"
+                placeholder="Simulation interval (seconds)" type="number" min="5" max="3600">
             <button type="submit">Update</button>
             <button type="button" (click)="editingSensor = null">Cancel</button>
         </form>

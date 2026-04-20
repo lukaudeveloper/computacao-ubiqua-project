@@ -20,6 +20,8 @@ with engine.begin() as conn:
             conn.execute(text("ALTER TABLE sensors ADD COLUMN is_active BOOLEAN DEFAULT FALSE"))
         if "color" not in columns:
             conn.execute(text("ALTER TABLE sensors ADD COLUMN color VARCHAR(20) DEFAULT '#007bff'"))
+        if "simulation_interval" not in columns:
+            conn.execute(text("ALTER TABLE sensors ADD COLUMN simulation_interval INT DEFAULT 30"))
     if "alerts" in inspector.get_table_names():
         columns = [column["name"] for column in inspector.get_columns("alerts")]
         if "threshold_value" not in columns:

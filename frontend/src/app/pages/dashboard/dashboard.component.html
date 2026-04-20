@@ -16,7 +16,10 @@
             <tbody>
                 <tr *ngFor="let sensor of sensors">
                     <td>{{ sensor.id }}</td>
-                    <td>{{ sensor.name }}</td>
+                    <td>
+                        <span class="color-dot" [style.background]="sensor.color"></span>
+                        {{ sensor.name }}
+                    </td>
                     <td>{{ sensor.type }}</td>
                     <td>{{ sensor.location }}</td>
                     <td>
@@ -40,7 +43,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let measurement of measurements | slice:0:10">
-                    <td>{{ measurement.sensor_name }}</td>
+                    <td>
+                        <span class="color-dot" [style.background]="measurement.sensor_color"></span>
+                        {{ measurement.sensor_name }}
+                    </td>
                     <td>{{ measurement.value }}</td>
                     <td>{{ measurement.timestamp }}</td>
                 </tr>
@@ -73,6 +79,25 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="pagination" *ngIf="pagination.pages > 1">
+            <button (click)="onPageChange(1)" [disabled]="currentPage === 1">First</button>
+            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+
+            <span *ngFor="let page of visiblePages">
+                <button (click)="onPageChange(page)" [class.active]="page === currentPage"
+                    [disabled]="page === currentPage">
+                    {{ page }}
+                </button>
+            </span>
+
+            <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === pagination.pages">Next</button>
+            <button (click)="onPageChange(pagination.pages)" [disabled]="currentPage === pagination.pages">Last</button>
+
+            <span class="pagination-info">
+                Page {{ currentPage }} of {{ pagination.pages }} ({{ pagination.total }} total)
+            </span>
+        </div>
     </div>
 
     <div class="modal" *ngIf="selectedAlert">

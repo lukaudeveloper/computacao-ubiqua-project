@@ -23,6 +23,16 @@ th, td {
   text-align: left;
 }
 
+.color-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  border: 1px solid #666;
+}
+
 .pagination {
   margin-top: 20px;
   display: flex;

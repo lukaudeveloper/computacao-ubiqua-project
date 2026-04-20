@@ -18,6 +18,7 @@ class SensorCreate(BaseModel):
     threshold_min: float | None = None
     threshold_max: float | None = None
     color: str = "#007bff"
+    simulation_interval: int = 30
 
 class SensorActivate(BaseModel):
     is_active: bool
@@ -61,6 +62,11 @@ def activate_sensor(sensor_id: int, payload: SensorActivate, token: HTTPAuthoriz
         raise HTTPException(status_code=404, detail="Sensor not found")
     db_sensor.is_active = payload.is_active
     db.commit()
+
+    # Atualizar jobs do scheduler
+    from websocket import update_sensor_jobs
+    update_sensor_jobs()
+
     return {"id": db_sensor.id, "is_active": db_sensor.is_active}
 
 @router.post("/sensors/{sensor_id}/simulate")

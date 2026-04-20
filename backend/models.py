@@ -21,6 +21,7 @@ class Sensor(Base):
     threshold_max = Column(Float, nullable=True)
     color = Column(String(20), default="#007bff")
     is_active = Column(Boolean, default=False)
+    simulation_interval = Column(Integer, default=30)  # Intervalo em segundos (padrão 30s)
     user_id = Column(Integer, ForeignKey("users.id"))
 
 class Measurement(Base):

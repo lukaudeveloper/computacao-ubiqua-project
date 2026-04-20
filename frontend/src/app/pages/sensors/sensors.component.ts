@@ -15,6 +15,7 @@ export class SensorsComponent implements OnInit {
     threshold_min: null,
     threshold_max: null,
     color: "#007bff",
+    simulation_interval: 30,
   };
   editingSensor: any = null;
   simulationMessage = "";
@@ -39,6 +40,7 @@ export class SensorsComponent implements OnInit {
         threshold_min: null,
         threshold_max: null,
         color: "#007bff",
+        simulation_interval: 30,
       };
     });
   }

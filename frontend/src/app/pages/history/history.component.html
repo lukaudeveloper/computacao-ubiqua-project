@@ -18,7 +18,10 @@
         <tbody>
             <tr *ngFor="let measurement of measurements">
                 <td>{{ measurement.timestamp }}</td>
-                <td>{{ measurement.sensor_name }}</td>
+                <td>
+                    <span class="color-dot" [style.background]="measurement.sensor_color"></span>
+                    {{ measurement.sensor_name }}
+                </td>
                 <td>{{ measurement.value }}</td>
             </tr>
         </tbody>
