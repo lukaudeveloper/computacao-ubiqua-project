@@ -7,8 +7,10 @@
             <input [(ngModel)]="newSensor.name" name="name" placeholder="Name" required>
             <input [(ngModel)]="newSensor.type" name="type" placeholder="Type" required>
             <input [(ngModel)]="newSensor.location" name="location" placeholder="Location" required>
-            <input [(ngModel)]="newSensor.threshold_min" name="threshold_min" placeholder="Threshold min" type="number" step="0.1">
-            <input [(ngModel)]="newSensor.threshold_max" name="threshold_max" placeholder="Threshold max" type="number" step="0.1">
+            <input [(ngModel)]="newSensor.threshold_min" name="threshold_min" placeholder="Threshold min" type="number"
+                step="0.1">
+            <input [(ngModel)]="newSensor.threshold_max" name="threshold_max" placeholder="Threshold max" type="number"
+                step="0.1">
             <button type="submit">Add</button>
         </form>
     </div>
@@ -64,8 +66,10 @@
             <input [(ngModel)]="editingSensor.name" name="name" placeholder="Name" required>
             <input [(ngModel)]="editingSensor.type" name="type" placeholder="Type" required>
             <input [(ngModel)]="editingSensor.location" name="location" placeholder="Location" required>
-            <input [(ngModel)]="editingSensor.threshold_min" name="threshold_min" placeholder="Threshold min" type="number" step="0.1">
-            <input [(ngModel)]="editingSensor.threshold_max" name="threshold_max" placeholder="Threshold max" type="number" step="0.1">
+            <input [(ngModel)]="editingSensor.threshold_min" name="threshold_min" placeholder="Threshold min"
+                type="number" step="0.1">
+            <input [(ngModel)]="editingSensor.threshold_max" name="threshold_max" placeholder="Threshold max"
+                type="number" step="0.1">
             <button type="submit">Update</button>
             <button type="button" (click)="editingSensor = null">Cancel</button>
         </form>

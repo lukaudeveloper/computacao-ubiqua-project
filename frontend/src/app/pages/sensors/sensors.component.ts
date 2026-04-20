@@ -55,9 +55,11 @@ export class SensorsComponent implements OnInit {
   }
 
   activateSensor(sensor: any) {
-    this.sensorService.activateSensor(sensor.id, !sensor.is_active).subscribe(() => {
-      this.loadSensors();
-    });
+    this.sensorService
+      .activateSensor(sensor.id, !sensor.is_active)
+      .subscribe(() => {
+        this.loadSensors();
+      });
   }
 
   simulateSensor(sensor: any) {

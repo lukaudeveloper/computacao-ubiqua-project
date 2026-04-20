@@ -5,7 +5,7 @@
         <button (click)="exportToCSV()">Export to CSV</button>
     </div>
 
-    <app-measurement-chart [measurements]="measurements" [key]="chartKey"></app-measurement-chart>
+    <app-measurement-chart [measurements]="allMeasurements" [key]="chartKey"></app-measurement-chart>
 
     <table>
         <thead>
@@ -23,4 +23,23 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="pagination" *ngIf="pagination.pages > 1">
+        <button (click)="onPageChange(1)" [disabled]="currentPage === 1">First</button>
+        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+
+        <span *ngFor="let page of visiblePages">
+            <button (click)="onPageChange(page)" [class.active]="page === currentPage"
+                [disabled]="page === currentPage">
+                {{ page }}
+            </button>
+        </span>
+
+        <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === pagination.pages">Next</button>
+        <button (click)="onPageChange(pagination.pages)" [disabled]="currentPage === pagination.pages">Last</button>
+
+        <span class="pagination-info">
+            Page {{ currentPage }} of {{ pagination.pages }} ({{ pagination.total }} total)
+        </span>
+    </div>
 </div>

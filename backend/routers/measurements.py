@@ -29,13 +29,20 @@ def create_measurement(measurement: MeasurementCreate, token: HTTPAuthorizationC
     return new_measurement
 
 @router.get("/measurements")
-def get_measurements(sensor_id: int | None = None, token: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
+def get_measurements(sensor_id: int | None = None, page: int = 1, limit: int = 50, token: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
     token_data = verify_token(token.credentials)
     user = db.query(User).filter(User.username == token_data.username).first()
     query = db.query(Measurement, Sensor.name.label("sensor_name")).join(Sensor).filter(Sensor.user_id == user.id)
     if sensor_id:
         query = query.filter(Measurement.sensor_id == sensor_id)
-    results = query.all()
+
+    # Get total count
+    total = query.count()
+
+    # Apply pagination
+    offset = (page - 1) * limit
+    results = query.order_by(Measurement.timestamp.desc()).offset(offset).limit(limit).all()
+
     measurements = []
     for measurement, sensor_name in results:
         measurements.append({
@@ -45,7 +52,16 @@ def get_measurements(sensor_id: int | None = None, token: HTTPAuthorizationCrede
             "timestamp": measurement.timestamp.isoformat(),
             "sensor_name": sensor_name,
         })
-    return measurements
+
+    return {
+        "measurements": measurements,
+        "pagination": {
+            "page": page,
+            "limit": limit,
+            "total": total,
+            "pages": (total + limit - 1) // limit,  # Ceiling division
+        }
+    }
 
 def check_alerts(sensor: Sensor, value: float, db: Session):
     if sensor.threshold_min and value < sensor.threshold_min:

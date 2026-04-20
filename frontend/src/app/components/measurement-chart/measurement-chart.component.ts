@@ -24,7 +24,17 @@ export class MeasurementChartComponent implements OnChanges {
     const ctx = document.getElementById(
       "measurementChart",
     ) as HTMLCanvasElement;
-    if (ctx) {
+    if (
+      ctx &&
+      this.measurements &&
+      Array.isArray(this.measurements) &&
+      this.measurements.length > 0
+    ) {
+      console.log(
+        "Creating chart with",
+        this.measurements.length,
+        "measurements",
+      );
       // Group measurements by sensor
       const sensorGroups: { [key: string]: any[] } = {};
       this.measurements.forEach((m) => {
@@ -36,14 +46,16 @@ export class MeasurementChartComponent implements OnChanges {
 
       // Get all unique timestamps
       const allTimestamps = Array.from(
-        new Set(this.measurements.map((m) => m.timestamp))
+        new Set(this.measurements.map((m) => m.timestamp)),
       ).sort();
 
       // Create datasets
       const datasets = Object.keys(sensorGroups).map((sensorName, index) => {
         const sensorMeasurements = sensorGroups[sensorName];
         const data = allTimestamps.map((timestamp) => {
-          const measurement = sensorMeasurements.find((m) => m.timestamp === timestamp);
+          const measurement = sensorMeasurements.find(
+            (m) => m.timestamp === timestamp,
+          );
           return measurement ? measurement.value : null;
         });
         const colors = [
@@ -77,6 +89,8 @@ export class MeasurementChartComponent implements OnChanges {
           },
         },
       });
+    } else {
+      console.log("Chart not created - conditions not met");
     }
   }
 }

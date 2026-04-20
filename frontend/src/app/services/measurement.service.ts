@@ -14,10 +14,15 @@ export class MeasurementService {
     private authService: AuthService,
   ) {}
 
-  getMeasurements(sensorId?: number): Observable<any> {
-    const url = sensorId
-      ? `${this.apiUrl}/measurements?sensor_id=${sensorId}`
-      : `${this.apiUrl}/measurements`;
+  getMeasurements(
+    sensorId?: number,
+    page: number = 1,
+    limit: number = 50,
+  ): Observable<any> {
+    let url = `${this.apiUrl}/measurements?page=${page}&limit=${limit}`;
+    if (sensorId) {
+      url += `&sensor_id=${sensorId}`;
+    }
     return this.http.get(url, { headers: this.authService.getHeaders() });
   }
 

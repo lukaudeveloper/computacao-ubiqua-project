@@ -41,9 +41,13 @@ export class SensorService {
   }
 
   simulateSensor(id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/sensors/${id}/simulate`, {}, {
-      headers: this.authService.getHeaders(),
-    });
+    return this.http.post(
+      `${this.apiUrl}/sensors/${id}/simulate`,
+      {},
+      {
+        headers: this.authService.getHeaders(),
+      },
+    );
   }
 
   deleteSensor(id: number): Observable<any> {
