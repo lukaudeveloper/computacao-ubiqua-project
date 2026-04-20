@@ -8,8 +8,15 @@ import { SensorService } from "../../services/sensor.service";
 })
 export class SensorsComponent implements OnInit {
   sensors: any[] = [];
-  newSensor = { name: "", type: "", location: "" };
+  newSensor: any = {
+    name: "",
+    type: "",
+    location: "",
+    threshold_min: null,
+    threshold_max: null,
+  };
   editingSensor: any = null;
+  simulationMessage = "";
 
   constructor(private sensorService: SensorService) {}
 
@@ -24,7 +31,13 @@ export class SensorsComponent implements OnInit {
   addSensor() {
     this.sensorService.createSensor(this.newSensor).subscribe(() => {
       this.loadSensors();
-      this.newSensor = { name: "", type: "", location: "" };
+      this.newSensor = {
+        name: "",
+        type: "",
+        location: "",
+        threshold_min: null,
+        threshold_max: null,
+      };
     });
   }
 
@@ -39,6 +52,19 @@ export class SensorsComponent implements OnInit {
         this.loadSensors();
         this.editingSensor = null;
       });
+  }
+
+  activateSensor(sensor: any) {
+    this.sensorService.activateSensor(sensor.id, !sensor.is_active).subscribe(() => {
+      this.loadSensors();
+    });
+  }
+
+  simulateSensor(sensor: any) {
+    this.sensorService.simulateSensor(sensor.id).subscribe((data) => {
+      this.simulationMessage = `Sensor ${sensor.name} simulou ${data.value} em ${new Date(data.timestamp).toLocaleString()}`;
+      this.loadSensors();
+    });
   }
 
   deleteSensor(id: number) {

@@ -2,11 +2,6 @@
     <h2>Measurement History</h2>
 
     <div class="filters">
-        <label for="sensor">Filter by Sensor:</label>
-        <select id="sensor" [(ngModel)]="selectedSensorId" (change)="onSensorChange()">
-            <option [value]="null">All Sensors</option>
-            <option *ngFor="let sensor of sensors" [value]="sensor.id">{{ sensor.name }}</option>
-        </select>
         <button (click)="exportToCSV()">Export to CSV</button>
     </div>
 

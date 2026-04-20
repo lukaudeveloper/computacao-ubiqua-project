@@ -19,6 +19,7 @@ class Sensor(Base):
     location = Column(String(100))
     threshold_min = Column(Float, nullable=True)
     threshold_max = Column(Float, nullable=True)
+    is_active = Column(Boolean, default=False)
     user_id = Column(Integer, ForeignKey("users.id"))
 
 class Measurement(Base):

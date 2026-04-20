@@ -9,7 +9,6 @@ import { SensorService } from "../../services/sensor.service";
 })
 export class HistoryComponent implements OnInit {
   measurements: any[] = [];
-  selectedSensorId: number | null = null;
   sensors: any[] = [];
 
   constructor(
@@ -28,12 +27,8 @@ export class HistoryComponent implements OnInit {
 
   loadMeasurements() {
     this.measurementService
-      .getMeasurements(this.selectedSensorId || undefined)
+      .getMeasurements()
       .subscribe((data) => (this.measurements = data));
-  }
-
-  onSensorChange() {
-    this.loadMeasurements();
   }
 
   exportToCSV() {

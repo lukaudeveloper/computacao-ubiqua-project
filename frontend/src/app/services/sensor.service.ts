@@ -32,6 +32,20 @@ export class SensorService {
     });
   }
 
+  activateSensor(id: number, isActive: boolean): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/sensors/${id}/activate`,
+      { is_active: isActive },
+      { headers: this.authService.getHeaders() },
+    );
+  }
+
+  simulateSensor(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/sensors/${id}/simulate`, {}, {
+      headers: this.authService.getHeaders(),
+    });
+  }
+
   deleteSensor(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/sensors/${id}`, {
       headers: this.authService.getHeaders(),

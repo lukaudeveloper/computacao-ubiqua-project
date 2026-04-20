@@ -32,10 +32,19 @@ def create_measurement(measurement: MeasurementCreate, token: HTTPAuthorizationC
 def get_measurements(sensor_id: int | None = None, token: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
     token_data = verify_token(token.credentials)
     user = db.query(User).filter(User.username == token_data.username).first()
-    query = db.query(Measurement).join(Sensor).filter(Sensor.user_id == user.id)
+    query = db.query(Measurement, Sensor.name.label("sensor_name")).join(Sensor).filter(Sensor.user_id == user.id)
     if sensor_id:
         query = query.filter(Measurement.sensor_id == sensor_id)
-    measurements = query.all()
+    results = query.all()
+    measurements = []
+    for measurement, sensor_name in results:
+        measurements.append({
+            "id": measurement.id,
+            "sensor_id": measurement.sensor_id,
+            "value": measurement.value,
+            "timestamp": measurement.timestamp.isoformat(),
+            "sensor_name": sensor_name,
+        })
     return measurements
 
 def check_alerts(sensor: Sensor, value: float, db: Session):

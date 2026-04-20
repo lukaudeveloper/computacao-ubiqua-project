@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status, WebSocket
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import inspect, text
 from sqlalchemy.orm import Session
 from database import get_db, engine
 from models import Base
@@ -9,8 +10,14 @@ from auth import verify_token
 from websocket import manager
 import uvicorn
 
-# Criar tabelas
+# Criar tabelas e garantir coluna de ativação
 Base.metadata.create_all(bind=engine)
+with engine.begin() as conn:
+    inspector = inspect(conn)
+    if "sensors" in inspector.get_table_names():
+        columns = [column["name"] for column in inspector.get_columns("sensors")]
+        if "is_active" not in columns:
+            conn.execute(text("ALTER TABLE sensors ADD COLUMN is_active BOOLEAN DEFAULT FALSE"))
 
 app = FastAPI(title="Sistema de Monitorização Ambiental", version="1.0.0")
 
