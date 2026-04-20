@@ -1,15 +1,31 @@
 {
-  "name": "Sistema Ubíquo para Monitorização Ambiental Inteligente",
+  "name": "environmental-monitoring",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ng": "ng",
+    "start": "ng serve --host 0.0.0.0 --port 4200",
+    "build": "ng build --configuration production",
+    "test": "ng test",
+    "lint": "ng lint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^16.2.0",
+    "@angular/common": "^16.2.0",
+    "@angular/compiler": "^16.2.0",
+    "@angular/core": "^16.2.0",
+    "@angular/forms": "^16.2.0",
+    "@angular/platform-browser": "^16.2.0",
+    "@angular/platform-browser-dynamic": "^16.2.0",
+    "@angular/router": "^16.2.0",
+    "chart.js": "^4.3.0",
+    "rxjs": "^7.8.0",
+    "zone.js": "^0.13.0"
+  },
   "devDependencies": {
-    "@angular/cli": "^21.2.7"
+    "@angular-devkit/build-angular": "^16.2.0",
+    "@angular/cli": "^16.2.0",
+    "@angular/compiler-cli": "^16.2.0",
+    "typescript": "~5.1.6"
   }
 }
