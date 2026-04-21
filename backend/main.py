@@ -7,7 +7,7 @@ from database import get_db, engine
 from models import Base
 from routers import users, sensors, measurements, alerts
 from auth import verify_token
-from websocket import manager
+from websocket import manager, update_sensor_jobs
 import uvicorn
 
 # Criar tabelas e garantir coluna de ativação
@@ -32,6 +32,14 @@ with engine.begin() as conn:
             conn.execute(text("ALTER TABLE alerts ADD COLUMN comparison VARCHAR(1) NULL"))
 
 app = FastAPI(title="Sistema de Monitorização Ambiental", version="1.0.0")
+
+# Evento de startup para configurar jobs do scheduler
+@app.on_event("startup")
+def startup_event():
+    from websocket import scheduler
+    if not scheduler.running:
+        scheduler.start()
+    update_sensor_jobs()
 
 # CORS para permitir acesso do frontend
 app.add_middleware(

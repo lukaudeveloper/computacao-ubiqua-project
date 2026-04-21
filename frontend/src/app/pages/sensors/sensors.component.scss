@@ -1,37 +1,6 @@
-.sensors {
-  padding: 20px;
-}
+// Custom styles for sensors page with Bootstrap
 
-.add-sensor, .edit-sensor {
-  margin-bottom: 20px;
-}
-
-form {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-input {
-  padding: 8px;
-}
-
-button {
-  padding: 8px 12px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-
+// Custom color dots (keeping for compatibility)
 .color-dot {
   display: inline-block;
   width: 12px;
@@ -40,4 +9,66 @@ th, td {
   margin-right: 8px;
   vertical-align: middle;
   border: 1px solid #666;
+}
+
+// Button group spacing
+.btn-group {
+  box-shadow: none;
+}
+
+// Form spacing
+.form-label {
+  font-weight: 500;
+}
+
+// Table customizations
+.table th {
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+// Badge customizations
+.badge {
+  font-size: 0.75em;
+}
+
+// Alert customizations
+.alert {
+  border-radius: 0.375rem;
+}
+
+// Card customizations
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .table-responsive {
+    border: none;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-group .btn {
+    margin-bottom: 0.25rem;
+  }
 }

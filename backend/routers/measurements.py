@@ -71,7 +71,7 @@ def check_alerts(sensor: Sensor, value: float, db: Session):
             message=f"Valor abaixo do mínimo: {value} < {sensor.threshold_min}",
             threshold_value=sensor.threshold_min,
             measurement_value=value,
-            comparison="<",
+            comparison="min",
         )
         db.add(alert)
         db.commit()
@@ -81,7 +81,7 @@ def check_alerts(sensor: Sensor, value: float, db: Session):
             message=f"Valor acima do máximo: {value} > {sensor.threshold_max}",
             threshold_value=sensor.threshold_max,
             measurement_value=value,
-            comparison=">",
+            comparison="max",
         )
         db.add(alert)
         db.commit()

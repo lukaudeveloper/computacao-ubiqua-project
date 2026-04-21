@@ -93,6 +93,8 @@ async def simulate_single_sensor(sensor_id: int):
                     "sensor_name": sensor.name,
                     "sensor_type": sensor.type,
                     "sensor_color": sensor.color,
+                    "sensor_threshold_min": sensor.threshold_min,
+                    "sensor_threshold_max": sensor.threshold_max,
                     "message": alert.message,
                     "threshold_value": alert.threshold_value,
                     "measurement_value": alert.measurement_value,
@@ -159,5 +161,4 @@ def generate_random_value(sensor_type: str) -> float:
         return round(random.uniform(30, 90), 2)  # dB
     return round(random.uniform(0, 100), 2)
 
-# Iniciar scheduler
-scheduler.start()
+# Scheduler será iniciado no startup do FastAPI
